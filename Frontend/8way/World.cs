@@ -59,7 +59,11 @@ public class World : Node2D
 		int x = y % 7;
 		y /= 7;
 		
-		board[y, x] = size;
+		// Chances for the newly made ball to be a certain number
+		int[] chances = {1, 1, 1, 1, 1, 1, 2, 2, 2, 3};
+		int index = rand.Next(0, 10);
+		
+		board[y, x] = chances[index];
 		/*
 		foreach (int num in zeroIndices) {
 			GD.Print(num);
@@ -105,11 +109,42 @@ public class World : Node2D
 	}
 	
 	private void down() {
+		// Store the next available space for the ball to move
+		int[] nextFree = {6, 6, 6, 6, 6, 6, 6};
 		
+		// Check first row
+		for (int j = 0; j < 7; j++) {
+			if (board[6, j] != 0) {
+				nextFree[j] = 5;
+			}
+		}
+		
+		// Check other rows, move and merge if possible
+		for (int i = 5; i >= 0; i--) {
+			for (int j = 0; j < 7; j++) {
+				if (board[i, j] > 0) {
+					if (nextFree[j] < 6 && board[i, j] == board[nextFree[j] + 1, j]) {
+						board[nextFree[j] + 1, j]++;
+						board[i, j] = 0;
+					} else if (nextFree[j] > i) {
+						board[nextFree[j], j] = board[i, j];
+						board[i, j] = 0;
+						nextFree[j]--;
+					} else {
+						nextFree[j]--;
+					}
+				} else if (board[i, j] < 0) { // -1 == non-usable space
+					nextFree[j] = i;
+				}
+			}
+		}
+		
+		AddBall(1);
+		printBoard();
 	}
 	
 	private void left() {
-		
+
 	}
 	
 	private void right() {
