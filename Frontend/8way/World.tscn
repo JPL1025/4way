@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://World.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/Tiles.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/title.png" type="Texture" id=3]
+[ext_resource path="res://Transition.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Sprites/gameover.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/reset.png" type="Texture" id=6]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -11,12 +14,17 @@ script = ExtResource( 1 )
 position = Vector2( 0, 1 )
 texture = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -108 )
+[node name="Title" type="Sprite" parent="."]
+position = Vector2( 0, -103 )
 texture = ExtResource( 3 )
 
+[node name="GameOver" type="Sprite" parent="."]
+visible = false
+z_index = 5
+texture = ExtResource( 5 )
+
 [node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2( 0, -20 )
+offset = Vector2( 0, -13 )
 current = true
 
 [node name="Balls" type="Node2D" parent="."]
@@ -132,3 +140,12 @@ current = true
 [node name="y5" type="Node2D" parent="Balls/x6"]
 
 [node name="y6" type="Node2D" parent="Balls/x6"]
+
+[node name="Transition" parent="." instance=ExtResource( 4 )]
+
+[node name="Button" type="Button" parent="."]
+margin_left = -51.0
+margin_top = 76.0
+margin_right = 51.0
+margin_bottom = 111.0
+icon = ExtResource( 6 )
