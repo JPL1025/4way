@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+//using System.Threading.Tasks;
 //using System.Text.Json;
 //using System.Text.Json.Serialization;
 
@@ -402,5 +403,12 @@ public class World : Node2D
 	private void GameOver() {
 		Sprite target = GetNode<Sprite>("GameOver");
 		target.Visible = true;
+	}
+	
+	
+	private async void _on_Button_button_up()
+	{
+		//await Task.Delay(500);
+		GetTree().ChangeScene("res://World.tscn");
 	}
 }

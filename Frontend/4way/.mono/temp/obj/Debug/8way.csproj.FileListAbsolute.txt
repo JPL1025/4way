@@ -7,3 +7,12 @@ C:\Users\jpl10\Desktop\8way\.mono\temp\obj\Debug\8way.AssemblyInfo.cs
 C:\Users\jpl10\Desktop\8way\.mono\temp\obj\Debug\8way.csproj.CoreCompileInputs.cache
 C:\Users\jpl10\Desktop\8way\.mono\temp\obj\Debug\8way.dll
 C:\Users\jpl10\Desktop\8way\.mono\temp\obj\Debug\8way.pdb
+C:\Users\jpl10\Desktop\4way\.mono\temp\bin\Debug\8way.dll
+C:\Users\jpl10\Desktop\4way\.mono\temp\bin\Debug\8way.pdb
+C:\Users\jpl10\Desktop\4way\.mono\temp\obj\Debug\8way.csproj.AssemblyReference.cache
+C:\Users\jpl10\Desktop\4way\.mono\temp\obj\Debug\8way.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jpl10\Desktop\4way\.mono\temp\obj\Debug\8way.AssemblyInfoInputs.cache
+C:\Users\jpl10\Desktop\4way\.mono\temp\obj\Debug\8way.AssemblyInfo.cs
+C:\Users\jpl10\Desktop\4way\.mono\temp\obj\Debug\8way.csproj.CoreCompileInputs.cache
+C:\Users\jpl10\Desktop\4way\.mono\temp\obj\Debug\8way.dll
+C:\Users\jpl10\Desktop\4way\.mono\temp\obj\Debug\8way.pdb

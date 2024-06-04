@@ -420,11 +420,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jpl10\\Desktop\\8way\\8way.csproj",
+      "projectUniqueName": "C:\\Users\\jpl10\\Desktop\\4way\\8way.csproj",
       "projectName": "8way",
-      "projectPath": "C:\\Users\\jpl10\\Desktop\\8way\\8way.csproj",
+      "projectPath": "C:\\Users\\jpl10\\Desktop\\4way\\8way.csproj",
       "packagesPath": "C:\\Users\\jpl10\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jpl10\\Desktop\\8way\\.mono\\temp\\obj\\",
+      "outputPath": "C:\\Users\\jpl10\\Desktop\\4way\\.mono\\temp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jpl10\\AppData\\Roaming\\NuGet\\NuGet.Config"

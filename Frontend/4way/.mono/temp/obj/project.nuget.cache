@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Uhhz7k6ml1Q=",
+  "dgSpecHash": "jie6xZ6nNOc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\jpl10\\Desktop\\8way\\8way.csproj",
+  "projectFilePath": "C:\\Users\\jpl10\\Desktop\\4way\\8way.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jpl10\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.3\\microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
     "C:\\Users\\jpl10\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net472\\1.0.3\\microsoft.netframework.referenceassemblies.net472.1.0.3.nupkg.sha512"
