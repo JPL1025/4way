@@ -32,7 +32,7 @@ public class World : Node2D
 		printBoard();
 	}
 	
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(float delta) {
 		if (Input.IsActionJustPressed("ui_up")) {
 			up();
@@ -406,9 +406,32 @@ public class World : Node2D
 	}
 	
 	
-	private async void _on_Button_button_up()
+	private void _on_Button_button_up()
 	{
 		//await Task.Delay(500);
 		GetTree().ChangeScene("res://World.tscn");
+	}
+	
+	private void _on_SwipeControls_DownSignal()
+	{
+		down();
+	}
+
+
+	private void _on_SwipeControls_LeftSignal()
+	{
+		left();
+	}
+
+
+	private void _on_SwipeControls_RightSignal()
+	{
+		right();
+	}
+
+
+	private void _on_SwipeControls_UpSignal()
+	{
+		up();
 	}
 }
