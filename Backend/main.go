@@ -1,9 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 )
 
 func main() {
@@ -25,10 +27,18 @@ func main() {
 }
 
 func jsonHandler(w http.ResponseWriter, r *http.Request) {
-	dayOfYear := getDayOnYear() // Gets day of the year
+	dayOfYear := getDayOfYear() // Gets day of the year
 
 	response, exists := jsonResponses[dayOfYear]
 	if !exists {
-		response = map[string]string{"message": "The day of year is " + dayOfYear}
+		response = map[string]string{"message": "The day of year is a regular day"}
 	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+func getDayOfYear() int {
+	now := time.Now()
+	return now.YearDay()
 }
