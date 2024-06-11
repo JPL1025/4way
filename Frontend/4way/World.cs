@@ -12,12 +12,19 @@ public class World : Node2D
 	// private string b = "text";
 	private PackedScene ballScene = GD.Load<PackedScene>("res://Ball.tscn");
 	private PackedScene transition = GD.Load<PackedScene>("res://Transition.tscn");
-	int[,] board;
+	private HTTPRequest = _httpRequest;
+	private int[,] board;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
 		board = new int[7, 7];
 		
+		_httpRequest = GetNode<HTTPRequest>("HTTPRequest");
+		
+		string url = "http://localhost/get-json";
+		FetchJSON(url);
+		
+		/*
 		if (ParseJSON("res://backup.json") == false) {
 			for (int i = 0; i < 7; i++) {
 				for (int j = 0; j < 7; j++) {
@@ -25,11 +32,30 @@ public class World : Node2D
 				}
 			}
 		}
+		*/
 		
 		AddBall();
 		AddBall();
 		
 		printBoard();
+	}
+	
+	private void FetchJSON(string url) {
+		var error = _httpRequest.Request(url);
+		if (error != Error.Ok) {
+			GD.PrintErr("Failed to send the HTTP request: ", error);
+		}
+	}
+	
+	
+	
+	private void OnRequestCompleted(int result, int responseCode, string[] headers, byte[] body) {
+		if (responseCode != 200) {
+			GD.PrintErr("HTTP request failed - code: ", responseCode);
+			return;
+		}
+		string jsonString = System.Text.Encoding.UTF8.GetString(body);
+		ParseJSON(jsonString);
 	}
 	
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -125,8 +151,55 @@ public class World : Node2D
 		spriteStay.Name = (oldSize + 1).ToString();
 	}
 
+	private bool ParseJSON(string jsonString) {
+		JSONParseResult jsonResult = JSON.Parse(jsonString);
+
+		if (jsonResult.Error != Error.Ok) {
+			GD.PrintErr("JSON could not be parsed: ", jsonResult.ErrorString);
+			return false;
+		}
+
+		// Validate the JSON result
+		if (!(jsonResult.Result is Godot.Collections.Dictionary jsonData)) {
+			GD.PrintErr("JSON content is not a dictionary");
+			return false;
+		}
+
+		if (!jsonData.Contains("booleanArray") || !(jsonData["booleanArray"] is Godot.Collections.Array dataArray)) {
+			GD.PrintErr("JSON does not contain a valid 'booleanArray'");
+			return false;
+		}
+
+		int i = 0;
+		foreach (Godot.Collections.Array row in dataArray) {
+			if (!(row is Godot.Collections.Array boolRow)) {
+				GD.PrintErr("Row is not a valid array");
+				return false;
+			}
+
+			int j = 0;
+			foreach (var val in boolRow) {
+				if (!(val is bool)) {
+					GD.PrintErr("Array element is not a boolean");
+					return false;
+				}
+
+				if ((bool)val) {
+					board[i, j] = 0;
+				}
+				else {
+					board[i, j] = -1;
+					placeSprite(i, j, -1);
+				}
+				j++;
+			}
+			i++;
+		}
+
+		return true;
+	}
 	
-	private bool ParseJSON(string path) {
+	private bool BackupJSON(string path) {
 		
 		// Open file and turn contents into a string
 		var file = new File();
