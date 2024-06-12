@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://SwipeControls.cs" type="Script" id=1]
+
+[node name="SwipeControls" type="Control"]
+anchor_left = 0.5
+anchor_top = 0.505
+anchor_right = 0.5
+anchor_bottom = 0.505
+margin_left = -127.0
+margin_top = -192.5
+margin_right = 127.0
+margin_bottom = 192.5
+script = ExtResource( 1 )

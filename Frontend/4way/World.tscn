@@ -152,8 +152,12 @@ margin_right = 45.0
 margin_bottom = 113.0
 theme = ExtResource( 6 )
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+timeout = 2.0
+
 [connection signal="DownSignal" from="SwipeControls" to="." method="_on_SwipeControls_DownSignal"]
 [connection signal="LeftSignal" from="SwipeControls" to="." method="_on_SwipeControls_LeftSignal"]
 [connection signal="RightSignal" from="SwipeControls" to="." method="_on_SwipeControls_RightSignal"]
 [connection signal="UpSignal" from="SwipeControls" to="." method="_on_SwipeControls_UpSignal"]
 [connection signal="button_up" from="Button" to="." method="_on_Button_button_up"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
