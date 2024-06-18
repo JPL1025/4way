@@ -14,6 +14,8 @@ public class World : Node2D
 	private PackedScene transition = GD.Load<PackedScene>("res://Transition.tscn");
 	private HTTPRequest _httpRequest;
 	private int[,] board;
+	
+	private int debugBall = 0;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
@@ -21,7 +23,7 @@ public class World : Node2D
 		
 		_httpRequest = GetNode<HTTPRequest>("HTTPRequest");
 		
-		string url = "http://localhost:8080/get-json";
+		string url = "https://fourway-backend.onrender.com/get-json";
 		FetchJSON(url);
 		
 		/*
@@ -48,6 +50,7 @@ public class World : Node2D
 		var error = _httpRequest.Request(url);
 		if (error != Error.Ok) {
 			GD.PrintErr("Failed to send the HTTP request: ", error);
+			debugBall = 10;
 			Backup();
 		}
 	}
@@ -56,6 +59,7 @@ public class World : Node2D
 		GD.Print("Request Completed!");
 		if (responseCode != 200) {
 			GD.PrintErr("HTTP request failed - code: ", responseCode);
+			debugBall = 11;
 			Backup();
 			return;
 		}
@@ -167,6 +171,7 @@ public class World : Node2D
 
 		if (jsonResult.Error != Error.Ok) {
 			GD.PrintErr("JSON could not be parsed: ", jsonResult.ErrorString);
+			debugBall = 12;
 			Backup();
 			return false;
 		}
@@ -174,12 +179,14 @@ public class World : Node2D
 		// Validate the JSON result
 		if (!(jsonResult.Result is Godot.Collections.Dictionary jsonData)) {
 			GD.PrintErr("JSON content is not a dictionary");
+			debugBall = 13;
 			Backup();
 			return false;
 		}
 
 		if (!jsonData.Contains("booleanArray") || !(jsonData["booleanArray"] is Godot.Collections.Array dataArray)) {
 			GD.PrintErr("JSON does not contain a valid 'booleanArray'");
+			debugBall = 14;
 			Backup();
 			return false;
 		}
@@ -188,6 +195,7 @@ public class World : Node2D
 		foreach (Godot.Collections.Array row in dataArray) {
 			if (!(row is Godot.Collections.Array boolRow)) {
 				GD.PrintErr("Row is not a valid array");
+				debugBall = 15;
 				Backup();
 				return false;
 			}
@@ -196,6 +204,7 @@ public class World : Node2D
 			foreach (var val in boolRow) {
 				if (!(val is bool)) {
 					GD.PrintErr("Array element is not a boolean");
+					debugBall = 16;
 					Backup();
 					return false;
 				}
@@ -316,6 +325,11 @@ public class World : Node2D
 		int[] chances = {1, 1, 1, 1, 1, 1, 2, 2, 2, 3};
 		int index = rand.Next(0, 10);
 		
+		if (debugBall != 0) {
+			board[y, x] = debugBall;
+			placeSprite(y, x, debugBall);
+			return;
+		}
 		board[y, x] = chances[index];
 		placeSprite(y, x, chances[index]);
 	}
@@ -527,7 +541,6 @@ public class World : Node2D
 		Sprite target = GetNode<Sprite>("GameOver");
 		target.Visible = true;
 	}
-	
 	
 	private void _on_Button_button_up()
 	{

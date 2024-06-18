@@ -7,7 +7,7 @@ public class SwipeControls : Control
 	private Vector2 startPos;
 	private Vector2 endPos;
 	private bool currentlySwiping = false;
-	private float minThreshold = 50.0f;
+	private float minThreshold = 25.0f;
 	
 	[Signal]
 	public delegate void UpSignal();
