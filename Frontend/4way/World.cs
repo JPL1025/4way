@@ -339,6 +339,14 @@ public class World : Node2D
 		// Store the next available space for the ball to move
 		int[] nextFree = {0, 0, 0, 0, 0, 0, 0};
 		
+		// Set merged array
+		bool[,] merged = new bool[7, 7];
+		for (int i = 0; i < 7; i++) {
+			for (int j = 0; j < 7; j++) {
+				merged[i, j] = false;
+			}
+		}
+		
 		// Check first row
 		for (int j = 0; j < 7; j++) {
 			if (board[0, j] != 0) {
@@ -351,9 +359,10 @@ public class World : Node2D
 			for (int j = 0; j < 7; j++) {
 				if (board[i, j] > 0) {
 					// Merge
-					if (nextFree[j] > 0 && board[i, j] == board[nextFree[j] - 1, j]) {
+					if (nextFree[j] > 0 && board[i, j] == board[nextFree[j] - 1, j] && merged[nextFree[j] - 1, j] == false) {
 						mergeSprites(i, j, nextFree[j] - 1, j, board[i, j]);
 						board[nextFree[j] - 1, j]++;
+						merged[nextFree[j] - 1, j] = true;
 						board[i, j] = 0;
 					// Move
 					} else if (nextFree[j] < i) {
@@ -380,6 +389,14 @@ public class World : Node2D
 		// Store the next available space for the ball to move
 		int[] nextFree = {6, 6, 6, 6, 6, 6, 6};
 		
+		// Set merged array
+		bool[,] merged = new bool[7, 7];
+		for (int i = 0; i < 7; i++) {
+			for (int j = 0; j < 7; j++) {
+				merged[i, j] = false;
+			}
+		}
+		
 		// Check first row
 		for (int j = 0; j < 7; j++) {
 			if (board[6, j] != 0) {
@@ -391,15 +408,19 @@ public class World : Node2D
 		for (int i = 5; i >= 0; i--) {
 			for (int j = 0; j < 7; j++) {
 				if (board[i, j] > 0) {
-					if (nextFree[j] < 6 && board[i, j] == board[nextFree[j] + 1, j]) {
+					// Merge
+					if (nextFree[j] < 6 && board[i, j] == board[nextFree[j] + 1, j] && merged[nextFree[j] + 1, j] == false) {
 						mergeSprites(i, j, nextFree[j] + 1, j, board[i, j]);
 						board[nextFree[j] + 1, j]++;
+						merged[nextFree[j] + 1, j] = true;
 						board[i, j] = 0;
+					// Move
 					} else if (nextFree[j] > i) {
 						board[nextFree[j], j] = board[i, j];
 						board[i, j] = 0;
 						moveSprite(i, j, nextFree[j], j, board[nextFree[j], j]);
 						nextFree[j]--;
+					// Space Taken
 					} else {
 						nextFree[j]--;
 					}
@@ -417,6 +438,14 @@ public class World : Node2D
 	private void left() {
 		// Store the next available space for the ball to move
 		int[] nextFree = {0, 0, 0, 0, 0, 0, 0};
+
+		// Set merged array
+		bool[,] merged = new bool[7, 7];
+		for (int i = 0; i < 7; i++) {
+			for (int j = 0; j < 7; j++) {
+				merged[i, j] = false;
+			}
+		}
 		
 		// Check first column
 		for (int i = 0; i < 7; i++) {
@@ -429,9 +458,10 @@ public class World : Node2D
 		for (int j = 1; j < 7; j++) {
 			for (int i = 0; i < 7; i++) {
 				if (board[i, j] > 0) { // If it is a ball
-					if (nextFree[i] > 0 && board[i, j] == board[i, nextFree[i] - 1]) {
+					if (nextFree[i] > 0 && board[i, j] == board[i, nextFree[i] - 1] && merged[i, nextFree[i] - 1] == false) {
 						mergeSprites(i, j, i, nextFree[i] - 1, board[i, j]);
 						board[i, nextFree[i] - 1]++;
+						merged[i, nextFree[i] - 1] = true;
 						board[i, j] = 0;
 					} else if (nextFree[i] < j) { // If ball can move that way
 						board[i, nextFree[i]] = board[i, j];
@@ -455,6 +485,14 @@ public class World : Node2D
 	private void right() {
 		// Store the next available space for the ball to move
 		int[] nextFree = {6, 6, 6, 6, 6, 6, 6};
+
+		// Set merged array
+		bool[,] merged = new bool[7, 7];
+		for (int i = 0; i < 7; i++) {
+			for (int j = 0; j < 7; j++) {
+				merged[i, j] = false;
+			}
+		}
 		
 		// Check first column
 		for (int i = 0; i < 7; i++) {
@@ -467,9 +505,10 @@ public class World : Node2D
 		for (int j = 5; j >= 0; j--) {
 			for (int i = 0; i < 7; i++) {
 				if (board[i, j] > 0) { // If it is a ball
-					if (nextFree[i] < 6 && board[i, j] == board[i, nextFree[i] + 1]) {
+					if (nextFree[i] < 6 && board[i, j] == board[i, nextFree[i] + 1] && merged[i, nextFree[i] + 1] == false) {
 						mergeSprites(i, j, i, nextFree[i] + 1, board[i, j]);
 						board[i, nextFree[i] + 1]++;
+						merged[i, nextFree[i] + 1] = true;
 						board[i, j] = 0;
 					} else if (nextFree[i] > j) { // If ball can move that way
 						board[i, nextFree[i]] = board[i, j];
@@ -571,4 +610,3 @@ public class World : Node2D
 		up();
 	}
 }
-
